@@ -31,7 +31,7 @@ const app = express();
 app.use(express.json())
 app.use(express(express.urlencoded({extended:true})))
 app.use(cors({
-  origin:'http://localhost:5173',
+  //origin:'http://localhost:5173',
   credentials:true  // Es para permitie establecer las cookies en el front
 }))
 app.use(cookieParser()); // Middleware de cookie: conbierte las cookie en un objeto JSON.
