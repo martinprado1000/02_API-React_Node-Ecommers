@@ -1,4 +1,5 @@
 import { createContext, useContext, useState } from "react";
+const URL_BACK = import.meta.env.VITE_URL_BACK
 
 const UsersContext = createContext();
 
@@ -14,7 +15,7 @@ const [users, setUsers] = useState(false)
 
   const getUsers = async () => {
     try {
-      let res = await fetch("http://localhost:8080/api/users");
+      let res = await fetch(`${URL_BACK}/api/users`);
       let responsBackend = await res.json();
       if (responsBackend.status !== 200) {
         throw error({"error":responsBackend})

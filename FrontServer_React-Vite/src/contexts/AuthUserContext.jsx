@@ -1,4 +1,5 @@
 import { createContext, useContext, useState } from "react";
+const URL_BACK = import.meta.env.VITE_URL_BACK
 
 const AuthUserContext = createContext();
 
@@ -16,7 +17,7 @@ export function AuthUserProvider({ children }) {
 
   const getUserAuth = async () => {
     try {
-      let res = await fetch("http://localhost:8080/api/profile", {
+      let res = await fetch(`${URL_BACK}/api/profile`, {
         credentials: "include", // Permito que el backend cargue la cookie en el front
       });
       let responsBackend = await res.json();

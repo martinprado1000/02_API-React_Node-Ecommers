@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
 import { useAuthContext } from "../../contexts/AuthUserContext";
+const URL_BACK = import.meta.env.VITE_URL_BACK 
 
 //Bootstrap
 import Button from "react-bootstrap/Button";
@@ -42,7 +43,7 @@ function BodyProductsAddEdit() {
   // Funcion para cargar datos en el formulario
   const getProductId = async (id) => {
     try {
-      let res = await fetch(`http://localhost:8080/api/products/${id}`, {
+      let res = await fetch(`${URL_BACK}/api/products/${id}`, {
         credentials: "include", // Permito que el backend cargue y elimine las cookie en el front
         headers: {
           "Content-Type": "application/json",
@@ -104,7 +105,7 @@ function BodyProductsAddEdit() {
 
       // **** Create Product ****
       try {
-        let res = await fetch("http://localhost:8080/api/products", {
+        let res = await fetch(`${URL_BACK}/api/products`, {
           method: "POST",
           credentials: "include", // Permito que el backend cargue y elimine las cookie en el front
           headers: {
@@ -155,7 +156,7 @@ function BodyProductsAddEdit() {
     } else {
       // **** Edit Product ****
       try {
-        let res = await fetch(`http://localhost:8080/api/products/${id}`, {
+        let res = await fetch(`${URL_BACK}/api/products/${id}`, {
           method: "PUT",
           credentials: "include",
           headers: {
@@ -221,7 +222,7 @@ function BodyProductsAddEdit() {
 
     try {
       let res = await fetch(
-        `http://localhost:8080/api/carts/${userAuth.cart}/product/${id}`,
+        `${URL_BACK}/api/carts/${userAuth.cart}/product/${id}`,
         {
           method: "POST",
           credentials: "include", // Permito que el backend cargue y elimine las cookie en el front

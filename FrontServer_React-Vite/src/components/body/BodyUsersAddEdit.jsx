@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useForm } from "react-hook-form"; //IMPORTAMOS el hook del formulario
 import { useNavigate, useParams } from "react-router-dom";
+const URL_BACK = import.meta.env.VITE_URL_BACK 
 
 //Bootstrap
 import Button from "react-bootstrap/Button";
@@ -39,7 +40,7 @@ function BodyUsersAddEdit() {
   const getUserId = async (id) => {
     console.log(`Editar usuario con id: ${id}`);
     try {
-      let res = await fetch(`http://localhost:8080/api/users/${id}`, {
+      let res = await fetch(`${URL_BACK}/api/users/${id}`, {
         credentials: "include", // Permito que el backend cargue y elimine las cookie en el front
         headers: {
           "Content-Type": "application/json",
@@ -93,7 +94,7 @@ function BodyUsersAddEdit() {
 
       // **** Create User ****
       try {
-        let res = await fetch("http://localhost:8080/api/users", { 
+        let res = await fetch(`${URL_BACK}/api/users`, { 
           method: "POST",
           credentials: "include", // Permito que el backend cargue y elimine las cookie en el front
           headers: {
@@ -148,7 +149,7 @@ function BodyUsersAddEdit() {
         delete data.passwordRepeat;
       }
       try {
-        let res = await fetch(`http://localhost:8080/api/users/${id}`, {
+        let res = await fetch(`${URL_BACK}/api/users/${id}`, {
           method: "PUT",
           credentials: "include",
           headers: {

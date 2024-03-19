@@ -2,6 +2,7 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+const URL_BACK = import.meta.env.VITE_URL_BACK 
 
 //Sweet Alert 2
 import Swal from 'sweetalert2';
@@ -30,7 +31,7 @@ const {
 
   const recoveryPass = async (data)=>{
     console.log(data)
-    let res = await fetch("http://localhost:8080/api/recoveryPassword", {  // El backend setea las cookier en el front
+    let res = await fetch(`${URL_BACK}/api/recoveryPassword`, {  // El backend setea las cookier en el front
     method: "PUT",
     credentials: 'include', // Permito que el backend cargue y elimine las cookie en el front
     headers: {

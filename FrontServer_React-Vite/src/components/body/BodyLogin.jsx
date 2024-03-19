@@ -2,6 +2,7 @@ import { NavLink } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useAuthContext } from "../../contexts/AuthUserContext";
+const URL_BACK = import.meta.env.VITE_URL_BACK  
 
 //Sweet Alert 2
 import Swal from 'sweetalert2';
@@ -36,7 +37,7 @@ function BodyLogin() {
 
   const loginUser = async (data) => {
     try {
-      let res = await fetch("http://localhost:8080/api/login", {  // El backend setea las cookier en el front
+      let res = await fetch(`${URL_BACK}/api/login`, {  // El backend setea las cookier en el front
         method: "POST",
         credentials: 'include', // Permito que el backend cargue y elimine las cookie en el front
         headers: {
