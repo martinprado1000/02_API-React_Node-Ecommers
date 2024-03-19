@@ -1,5 +1,6 @@
 import { createContext, useContext, useState } from "react";
 const URL_BACK = import.meta.env.VITE_URL_BACK
+console.log(URL_BACK)
 
 const ProductsContext = createContext();
 
@@ -15,7 +16,9 @@ export function ProductsProvider({ children }) {
   const getProducts = async () => {
     try {
       let res = await fetch(`${URL_BACK}/api/products`);
+      console.log(res)
       let responsBackend = await res.json();
+      console.log(responsBackend)
       if (responsBackend.status == 200) {
         setProducts(responsBackend.data);
         return;

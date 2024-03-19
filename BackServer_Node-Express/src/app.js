@@ -3,11 +3,10 @@ const cors = require("cors")
 const { Command } = require ('commander')
 const dotenv = require('dotenv')
 const configEnvFn = require ("./config.env/configEnv")
-//const session = require("express-session");     // Crea una session
-//const MongoStore = require("connect-mongo");    // Conecta a mongo para generar las sessiones
 const cookieParser = require("cookie-parser"); 
 const passport = require('passport')
 const initializePassport = require('./config.passport/passportConfig')
+const path = require('path');
 
 // Obtengo los argumentos, las variables de entorno y se lo paso al archivo config de mongo.
 const program = new Command();
@@ -15,7 +14,7 @@ program.option("--mode <mode>", "Modo de trabajo", "dev"); // Por default ejecut
 program.parse(); // Finaliza la configuracion de argumentos
 const options = program.opts(); // Obtengo los argumentos
 dotenv.config({ // Le indico a dotenv el path donde se encuentra las variables de entorno
-  path: `src/.env.${options.mode}` // path: inicia donde se hace el init de la app
+  path: `src/.env.${options.mode}` // path: indica donde se hace el init de la app
 });
 console.log(`Sistema ejecutado en modo: ${options.mode}`);
 
@@ -24,9 +23,10 @@ const config = configEnvFn(); //Obtenemos las variables de entorno
 // Conexion a la base de datos
 const DbMongoSingleton = require('./connections/singleton')
 const dbConnectionSingleton = DbMongoSingleton.getConnection(config)
-//const CONNECTION_MONGO = DbMongoSingleton.urlConnection() // Obtengo la url de conexion para pasarselo a MongoStore para las sessiones.
 
 const app = express();
+
+app.use(express.static(path.join(__dirname, 'build')));
 
 app.use(express.json())
 app.use(express(express.urlencoded({extended:true})))
