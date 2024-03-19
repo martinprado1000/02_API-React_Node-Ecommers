@@ -8,7 +8,7 @@ export function FatalErrorPage() {
       <h1 className="container mt-5">FatalErrorPage: Error en el sistema</h1>
       <button
         className="btn btn-primary mt-3"
-        onClick={() => navigate("/home")}
+        onClick={() => navigate("/")}
       >
         Volver al inicio
       </button>

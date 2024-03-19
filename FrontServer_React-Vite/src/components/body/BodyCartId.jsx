@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { useForm } from "react-hook-form";
+const URL_BACK = import.meta.env.VITE_URL_BACK  
 
 // bootstrap
 import Table from "react-bootstrap/Table";
@@ -22,7 +22,7 @@ function BodyCartId() {
 
   const getCart = async () => {
     try {
-      let res = await fetch(`http://localhost:8080/api/carts/${cartId}`, {
+      let res = await fetch(`${URL_BACK}/api/carts/${cartId}`, {
         credentials: "include",
       });
 
@@ -59,7 +59,7 @@ function BodyCartId() {
     } else {
       try {
         let res = await fetch(
-          `http://localhost:8080/api/carts/${cartId}/product/${editProduct}`,
+          `${URL_BACK}/api/carts/${cartId}/product/${editProduct}`,
           {
             method: "PUT",
             credentials: "include", // Permito que el backend cargue y elimine las cookie en el front
@@ -128,7 +128,7 @@ function BodyCartId() {
       if (result.isConfirmed) {
         try {
           let res = await fetch(
-            `http://localhost:8080/api/carts/${cartId}/product/${deleteProduct}`,
+            `${URL_BACK}/api/carts/${cartId}/product/${deleteProduct}`,
             {
               method: "DELETE",
               credentials: "include", // Permito que el backend cargue y elimine las cookie en el front
@@ -179,12 +179,15 @@ function BodyCartId() {
       if (result.isConfirmed) {
         try {
           console.log("hola");
-          let res = await fetch(`http://localhost:8080/api/cartsBuyConfirm/${cart.id}`, {
-            method: "POST",
-            credentials: "include",
-            headers: { "Content-Type": "application/json", },
-          });
-          console.log(res)
+          let res = await fetch(
+            `${URL_BACK}/api/cartsBuyConfirm/${cart.id}`,
+            {
+              method: "POST",
+              credentials: "include",
+              headers: { "Content-Type": "application/json" },
+            }
+          );
+          console.log(res);
           let responsBackend = await res.json();
           console.log(responsBackend);
           if (responsBackend.status == 204) {
@@ -228,67 +231,73 @@ function BodyCartId() {
           No existen productos en tu carrito
         </p>
       ) : (
-        <Table striped bordered hover variant="dark" className="">
-          <thead>
-            <tr className="row">
-              <th className="col-2">Título</th>
-              <th className="col-2">Descripción</th>
-              <th className="col-1">Código</th>
-              <th className="col-1">Precio</th>
-              <th className="col-1">Categoria</th>
-              <th className="col-1">Stock</th>
-              <th className="col-1">Cantidad en el carrito</th>
-              <th className="col-2">Modificar cantidad</th>
-              <th className="col-1"></th>
-            </tr>
-          </thead>
+        <>
+          <Table striped bordered hover variant="dark" className="">
+            <thead>
+              <tr className="row">
+                <th className="col-2">Título</th>
+                <th className="col-2">Descripción</th>
+                <th className="col-1">Código</th>
+                <th className="col-1">Precio</th>
+                <th className="col-1">Categoria</th>
+                <th className="col-1">Stock</th>
+                <th className="col-1">Cantidad en el carrito</th>
+                <th className="col-2">Modificar cantidad</th>
+                <th className="col-1"></th>
+              </tr>
+            </thead>
 
-          <tbody>
-            {productsInCart &&
-              productsInCart.map((products) => (
-                <tr className="row" key={products._id}>
-                  <td className="col-2">{products.product.title}</td>
-                  <td className="col-2">{products.product.description}</td>
-                  <td className="col-1">{products.product.code}</td>
-                  <td className="col-1">{products.product.price}</td>
-                  <td className="col-1">{products.product.category}</td>
-                  <td className="col-1">{products.product.stock}</td>
-                  <td className="col-1">{products.quantity}</td>
-                  <td className="col-2">
-                    <Form
-                      onSubmit={(e) =>
-                        handleSubmitEditQuantity(e, products.product._id)
-                      }
-                    >
-                      <InputGroup size="sm">
-                        <Form.Control
-                          value={editQuantity || ""} // agrego || '' para que no arroje error al renderizar si editQuantity no tiene ningun valor.
-                          type="number"
-                          placeholder="Cantidad"
-                          onChange={(e) => setEditQuantity(e.target.value)}
-                        />
-                        <Button type="submit" className="btn-info">
-                          Editar cantidad
-                        </Button>
-                      </InputGroup>
-                    </Form>
-                  </td>
-                  <td className="col-1">
-                    <button
-                      className="btn btn-danger btn-sm d-block mx-auto"
-                      onClick={() => handleDelite(products.product._id)}
-                    >
-                      Eliminar
-                    </button>
-                  </td>
-                </tr>
-              ))}
-          </tbody>
-        </Table>
+            <tbody>
+              {productsInCart &&
+                productsInCart.map((products) => (
+                  <tr className="row" key={products._id}>
+                    <td className="col-2">{products.product.title}</td>
+                    <td className="col-2">{products.product.description}</td>
+                    <td className="col-1">{products.product.code}</td>
+                    <td className="col-1">{products.product.price}</td>
+                    <td className="col-1">{products.product.category}</td>
+                    <td className="col-1">{products.product.stock}</td>
+                    <td className="col-1">{products.quantity}</td>
+                    <td className="col-2">
+                      <Form
+                        onSubmit={(e) =>
+                          handleSubmitEditQuantity(e, products.product._id)
+                        }
+                      >
+                        <InputGroup size="sm">
+                          <Form.Control
+                            value={editQuantity || ""} // agrego || '' para que no arroje error al renderizar si editQuantity no tiene ningun valor.
+                            type="number"
+                            placeholder="Cantidad"
+                            onChange={(e) => setEditQuantity(e.target.value)}
+                          />
+                          <Button type="submit" className="btn-info">
+                            Editar cantidad
+                          </Button>
+                        </InputGroup>
+                      </Form>
+                    </td>
+                    <td className="col-1">
+                      <button
+                        className="btn btn-danger btn-sm d-block mx-auto"
+                        onClick={() => handleDelite(products.product._id)}
+                      >
+                        Eliminar
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+            </tbody>
+          </Table>
+          <Button
+            type="submit"
+            className="btn-success"
+            onClick={handleBuyProducts}
+          >
+            Comprar productos
+          </Button>
+        </>
       )}
-      <Button type="submit" className="btn-success" onClick={handleBuyProducts}>
-        Comprar productos
-      </Button>
     </div>
   );
 }

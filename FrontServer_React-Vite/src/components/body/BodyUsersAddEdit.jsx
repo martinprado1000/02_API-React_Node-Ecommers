@@ -358,7 +358,7 @@ function BodyUsersAddEdit() {
 
       <Row className="mt-3">
         <Form.Group as={Col} md="3">
-          <Form.Label>Seleccione un rol para el usuario</Form.Label>
+          <Form.Label>Rol de usuario</Form.Label>
           <Form.Select
             md="3"
             {...register("rol", {

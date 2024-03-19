@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useProductsContext } from "../../contexts/ProductsContext";
 import { useAuthContext } from "../../contexts/AuthUserContext";
 import { useCartsContext } from "../../contexts/CartsContext"
+const URL_BACK = import.meta.env.VITE_URL_BACK;
 // bootstrap
 import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
@@ -43,7 +44,7 @@ function BodyHome() {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          let res = await fetch(`http://localhost:8080/api/products/${id}`, {
+          let res = await fetch(`${URL_BACK}/api/products/${id}`, {
             method: "DELETE",
             credentials: 'include', // Permito que el backend cargue y elimine las cookie en el front
             headers: {

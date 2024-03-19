@@ -21,7 +21,7 @@ console.log(`Sistema ejecutado en modo: ${options.mode}`);
 
 const config = configEnvFn(); //Obtenemos las variables de entorno
 
-// Conecion a la base de datos
+// Conexion a la base de datos
 const DbMongoSingleton = require('./connections/singleton')
 const dbConnectionSingleton = DbMongoSingleton.getConnection(config)
 //const CONNECTION_MONGO = DbMongoSingleton.urlConnection() // Obtengo la url de conexion para pasarselo a MongoStore para las sessiones.
@@ -31,8 +31,8 @@ const app = express();
 app.use(express.json())
 app.use(express(express.urlencoded({extended:true})))
 app.use(cors({
-  //origin:'http://localhost:5173',
-  credentials:true  // Es para permitie establecer las cookies en el front
+  origin : config.url_front,
+  credentials : true  // Es para permitie establecer las cookies en el front
 }))
 app.use(cookieParser()); // Middleware de cookie: conbierte las cookie en un objeto JSON.
 initializePassport();
@@ -46,7 +46,7 @@ app.use("/api",usersRouter)
 app.use("/api",productsRouter)
 app.use("/api",cartsRouter)
 
-const PORT = process.env.PORT || 8080;
+const PORT = config.portServer || 8080;
 app.listen(PORT,()=>{
     console.log(`Server on port ${PORT}`);
 })

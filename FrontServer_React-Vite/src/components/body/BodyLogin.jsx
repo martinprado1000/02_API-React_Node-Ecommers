@@ -46,7 +46,6 @@ function BodyLogin() {
       });
       
       let responsBackend = await res.json(); //Transformo a JSON la respuesta
-      console.log(responsBackend)
       if (responsBackend.status != 201) {
         Swal.fire({
           title: responsBackend.data[0].msg ? responsBackend.data[0].msg : responsBackend.data,

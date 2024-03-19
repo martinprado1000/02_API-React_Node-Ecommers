@@ -31,7 +31,8 @@ function App() {
             <CartsProvider>
               <BrowserRouter>
                 <Routes> {/* Indicamos que vas a ser multiples rutas */}
-                
+
+                  <Route path="/" element={<HomePage />}></Route>
                   <Route path="/home" element={<HomePage />}></Route>
                   <Route path="/home/:id" element={<ProductsAddEditPage />}></Route>
                   <Route path="/register" element={<RegisterPage />}></Route>
