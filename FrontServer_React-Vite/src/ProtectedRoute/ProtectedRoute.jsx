@@ -23,7 +23,9 @@ export function ProtectedRoute({rol}) {
   switch (rol) {
     case "superAdmin":
       if (userAuth.rol == "superAdmin") {
-        return <Outlet />;
+        return <Outlet />;  // Outlet: indica que puede continuar con las RUTAS que esten adentro. 
+                            // Outlet hace referencia a las rutas que tiene como hijo.
+                            // Mientras que childres hace referencia a los componentes.
       }
       break
 

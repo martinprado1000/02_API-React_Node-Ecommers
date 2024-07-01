@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
 const UsersRepository = require("../repositories/usersRepository");
-const CartsRepository = require("../repositories/cartsRepository");
 const { hashPassword, isValidPassword } = require("../utils/passwordHash");
 const { generateToken, verifyToken } = require("../utils/jwt");
 const { sendMailRecoveryPassword } = require("../utils/sendMailFn");
@@ -13,7 +12,6 @@ const isValid = (id) => {
 class UsersService {
   constructor() {
     this.usersRepository = new UsersRepository();
-    this.cartsRepository = new CartsRepository();
   }
 
   async get() {
@@ -71,7 +69,7 @@ class UsersService {
       };
       return { status: 200, data: usersPaginate };
     } catch (e) {
-      console.log(e);
+      //console.log(e);
       return { status: 500, data: "Error inesperado en el sistema" };
     }
   }
@@ -124,13 +122,7 @@ class UsersService {
   async post(body) {
     const {
       email,
-      name,
-      username,
-      lastname,
-      age,
       password,
-      passwordRepeat,
-      rol,
     } = body; // Username no es obligatorio, se reemplaza con el correo
     try {
       let exist = await this.getByEmail(email);
@@ -144,10 +136,38 @@ class UsersService {
       }); // Creo el usuario
 
       if (user) {
-        await this.cartsRepository.post(email); // Creo el carrito default
         return { status: 201, data: "Usuario ingresado correctamente" };
       } else {
         return { status: 500, data: "Error al crear el usuario" };
+      }
+    } catch (e) {
+      //console.log(e);
+      return { status: 500, data: "Error inesperado en el sistema" };
+    }
+  }
+
+  async postSuperAdmin () {
+    try {
+      let body = {
+        email:"superadmin6@superadmin.com",
+        name:"superadmin",
+        username: "superAdmin",
+        lastname: "superAdmin",
+        age:50,
+        password:"123456",
+        passwordRepeat:"123456",
+        rol:"superAdmin"
+      } 
+      let passwordHashed = hashPassword(body.password); // Llamamos a la función para hashear la password
+      delete body.passwordRepeat;
+      const user = await this.usersRepository.post({
+        ...body,
+        password: passwordHashed,
+      }); // Creo el usuario
+      if (user) {
+        return { status: 201, data: "Usuario ingresado correctamente" };
+      } else {
+        return { status: 500, data: "Error al guardar el usuario" };
       }
     } catch (e) {
       console.log(e);
@@ -223,10 +243,6 @@ class UsersService {
       if (result.deletedCount == 0) {
         return { status: 404, data: "Usuario no encontrado" };
       }
-
-      const cart = await this.cartsRepository.getByEmail(user.data.email); // Obtengo el carrito del usuario
-      await this.cartsRepository.delete(cart.id); // Elimino el carrito del usuario
-
       return { status: 201, data: "Usuario eliminado correctamente" };
     } catch (e) {
       console.log(e);
@@ -272,7 +288,6 @@ class UsersService {
         age,
         rol: registered.rol, // El rol lo obtengo del objeto porque no es una propiedad obligatoria entonces si no lo pasan es user por default.
       });
-      await this.cartsRepository.post(email); // Creo el carrito default
       return {
         response: {
           status: 201,
@@ -384,11 +399,6 @@ class UsersService {
   async profile(req) {
     try {
       let user = req.user; // Al trabajar sin sessiones el req.user son los datos obtenidos del token con jwt.
-      const cartUser = await this.cartsRepository.getByEmail(user.email) // Obtengo el carrito del usuario
-      if (!cartUser) {
-        throw new Error("No se pudo obtener el carrito")
-      }
-      user.cart = cartUser.id // Le agrego el id del carrito al usuario
       return { status: 200, data: user };
     } catch (error) {
       console.log({ status: 500, data: "Error inesperado en el sistema", errorDetail:error });

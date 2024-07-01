@@ -41,10 +41,14 @@ app.use(passport.initialize());
 const usersRouter = require("./routers/usersRoutes")
 const productsRouter = require("./routers/productsRoutes")
 const cartsRouter = require("./routers/cartsRoutes")
+const errorlogRouter = require("./routers/errorLogRoutes")
+const auditlogRouter = require("./routers/auditLogRoutes")
 
 app.use("/api",usersRouter)
 app.use("/api",productsRouter)
 app.use("/api",cartsRouter)
+app.use("/api",errorlogRouter)
+app.use("/api",auditlogRouter)
 
 const PORT = config.portServer || 8080;
 app.listen(PORT,()=>{

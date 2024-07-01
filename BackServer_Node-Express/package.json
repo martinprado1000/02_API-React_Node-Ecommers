@@ -30,6 +30,8 @@
     "passport": "^0.6.0",
     "passport-github2": "^0.1.12",
     "passport-jwt": "^4.0.1",
-    "passport-local": "^1.0.0"
+    "passport-local": "^1.0.0",
+    "stack-trace": "^1.0.0-pre2",
+    "winston-mongodb": "^5.1.1"
   }
 }

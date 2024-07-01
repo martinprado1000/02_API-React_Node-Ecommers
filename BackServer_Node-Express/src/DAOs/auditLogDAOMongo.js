@@ -1,4 +1,4 @@
-const UsersModel = require("../models/usersModel");
+const AuditLogModel = require("../models/auditLogModel");
 
 function logWithLineNumber(message) {
   const stack = new Error().stack.split("\n");
@@ -13,14 +13,16 @@ function logWithLineNumber(message) {
   };
 }
 
-class UsersDAOMongo {
+class AuditLogDAOMongo {
   constructor() {
-    this.usersModel = UsersModel;
+    this.auditlogModel = AuditLogModel;
   }
 
   async get() {
     try {
-      return await this.usersModel.find();
+      const result = await this.auditlogModel.find();
+      console.log(result)
+      return result
     } catch (e) {
       throw new Error("Error inesperado al realizar la consulta get");
     }
@@ -28,7 +30,7 @@ class UsersDAOMongo {
 
   async getPaginate(query, options) {
     try {
-      return await this.usersModel.paginate(query, options);
+      return await this.auditlogModel.paginate(query, options);
     } catch (e) {
       throw new Error("Error inesperado al realizar la consulta get");
     }
@@ -36,7 +38,7 @@ class UsersDAOMongo {
 
   async getById(id) {
     try {
-      return await this.usersModel.findById(id);
+      return await this.auditlogModel.findById(id);
     } catch (e) {
       throw new Error("Error inesperado al realizar la consulta getById");
     }
@@ -44,7 +46,7 @@ class UsersDAOMongo {
 
   async getByEmail(email) {
     try {
-      return await this.usersModel.findOne({ email: email });
+      return await this.auditlogModel.findOne({ email: email });
     } catch (e) {
       throw new Error("Error inesperado al realizar la consulta getById");
     }
@@ -52,7 +54,7 @@ class UsersDAOMongo {
 
   async getByUsername(username) {
     try {
-      return await this.usersModel.findOne({ username: username });
+      return await this.auditlogModel.findOne({ username: username });
     } catch (e) {
       throw new Error("Error inesperado al realizar la consulta getById");
     }
@@ -60,7 +62,8 @@ class UsersDAOMongo {
 
   async post(body) {
     try {
-      return await this.usersModel.create(body);
+      console.log(body)
+      return await this.auditlogModel.create(body);   
     } catch (error) {
       const field = Object.keys(error.keyPattern)[0];
       const value = error.keyValue[field];
@@ -72,7 +75,7 @@ class UsersDAOMongo {
 
   async put(id, body) {
     try {
-      return await this.usersModel.findByIdAndUpdate(id, { $set: body });
+      return await this.auditlogModel.findByIdAndUpdate(id, { $set: body });
     } catch (e) {
       console.log(e);
       throw new Error("Error inesperado al realizar la consulta");
@@ -81,11 +84,11 @@ class UsersDAOMongo {
 
   async delete(id) {
     try {
-      return await this.usersModel.deleteOne({ _id: id });
+      return await this.auditlogModel.deleteOne({ _id: id });
     } catch (e) {
       throw new Error("Error inesperado al realizar la consulta");
     }
   }
 }
 
-module.exports = UsersDAOMongo;
+module.exports = AuditLogDAOMongo;

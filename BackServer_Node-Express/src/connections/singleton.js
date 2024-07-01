@@ -6,6 +6,7 @@ class MongoSingleton {
   static instance;
 
   constructor(settings) {
+    console.log(settings.db_name)
     switch (settings.persistence) {
       case "MONGO_ATLAS_PROD":
       case "MONGO_ATLAS_DEV":

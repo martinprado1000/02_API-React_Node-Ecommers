@@ -23,8 +23,12 @@ class ServicesController {
   }
 
   async post(req, res) {
-    const body = req.body;
     const result = await this.usersService.post(body);
+    res.json(result);
+  }
+
+  async postSuperAdmin(req, res) {
+    const result = await this.usersService.postSuperAdmin();
     res.json(result);
   }
 

@@ -39,7 +39,8 @@ function App() {
                   <Route path="/login" element={<LoginPage />}></Route>
                   <Route path="/recoveryPassword" element={<RecoveryPasswordPage />}></Route>
 
-                  <Route element={<ProtectedRoute rol="user" />}>
+                  <Route element={<ProtectedRoute rol="user" />}> 
+                    {/* element: indica que use el siguiente componente antes de continuar con la ruta solicitada */}
                     <Route path="/profile" element={<ProfilePage />}></Route>
                     <Route path="/cart/:id" element={<CartIdPage />}></Route>
                   </Route>

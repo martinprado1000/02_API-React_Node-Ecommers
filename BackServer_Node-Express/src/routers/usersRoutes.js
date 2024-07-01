@@ -17,6 +17,7 @@ usersRouter.get("/users", usersController.get.bind(usersController));
 usersRouter.get("/usersPaginate",usersController.getPaginate.bind(usersController));
 usersRouter.get("/users/:uid", usersController.getById.bind(usersController));
 usersRouter.post("/users", passportCallMiddleware('jwt', { session: false}), authorizationMiddleware('routeSuperAdminProtected'), userPostRegisterValidator, usersController.post.bind(usersController));
+usersRouter.post("/userSuperAdmin", usersController.postSuperAdmin.bind(usersController));
 usersRouter.put("/users/:uid", passportCallMiddleware('jwt', { session: false}), authorizationMiddleware('routeSuperAdminProtected'), userPutValidator, usersController.put.bind(usersController));
 usersRouter.delete("/users/:uid", passportCallMiddleware('jwt', { session: false}), authorizationMiddleware('routeSuperAdminProtected'), usersController.delete.bind(usersController));
 
