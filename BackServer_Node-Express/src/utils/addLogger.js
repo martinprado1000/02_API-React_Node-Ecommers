@@ -10,7 +10,7 @@
 // 6-silly
 // Si le defino al transporte que el nivel es http, va a loguear si ejecutamos un winston.log nivel error,warn,info y http. Loguea hacia ↑.
 
-const winston = require("winston");
+const {winston} = require("winston");
 const winstonDB = require('winston-mongodb');
 
 const addLogger = () => {
@@ -23,27 +23,23 @@ const addLogger = () => {
     
     transports: [
 
-      new winston.transports.MongoDB({
-        level: "info",
-        winstonDB: `mongodb+srv://${settings.db_user}:${settings.db_password}@${settings.db_host}/${settings.db_name}?retryWrites=true&w=majority`,
-        collection: "errorLog"
-      }),
+      // new winston.transports.MongoDB({
+      //   level: "info",
+      //   winstonDB: `mongodb+srv://${settings.db_user}:${settings.db_password}@${settings.db_host}/${settings.db_name}?retryWrites=true&w=majority`,
+      //   collection: "errorLog"
+      // }),
 
-      new winston.transports.MongoDB({
-        level: "info",
-        winstonDB: `mongodb+srv://${settings.db_user}:${settings.db_password}@${settings.db_host}/${settings.db_name}?retryWrites=true&w=majority`,
-        collection: "auditLog"
-      }),
+      // new winston.transports.MongoDB({
+      //   level: "info",
+      //   winstonDB: `mongodb+srv://${settings.db_user}:${settings.db_password}@${settings.db_host}/${settings.db_name}?retryWrites=true&w=majority`,
+      //   collection: "auditLog"
+      // }),
 
       new winston.transports.File({
-        filename: "./log1.log",
+        filename: "./log1111111111111111111111111111.log",
         level: "http",
       }),
 
-      new winston.transports.File({
-        filename: "./log2.log",
-        level: "info"
-      }),
     ],
     
   });
@@ -56,9 +52,10 @@ const errorLog = () => {
     // Middleware que voy a llamar cada vez que se haga una petición para generar un log.
     if (logger) {
     //const now = new Date().toISOString().slice(0, 19).replace('T', ' ');
-        logger.http(
+        logger.info(
+          "asdad"
             // Aca adentro le paso lo que quiero loggear. Si no pongo nada logea el nivel de error.
-            `Peticion: ${req.method}, a la url: ${req.url} - ${formattedDate}`
+            // `Peticion: ${req.method}, a la url: ${req.url} - ${formattedDate}`
     );
   }
   return;

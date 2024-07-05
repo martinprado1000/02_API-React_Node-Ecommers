@@ -1,16 +1,16 @@
 const { Schema, model } = require("mongoose");
 const mongoosePaginate = require("mongoose-paginate-v2");
 
-const auditLogSchema = new Schema(
+const auditLogsSchema = new Schema(
   {
     typeError: {
       type: String,
       default: "auditLog",
     },
-    level: { // error, info, warning, etc
+    level: {
       type: String,
       default: "info",
-      enum: ["error","warning","info"],
+      enum: ["error", "warning", "info"],
       require: true,
     },
     method: {
@@ -18,10 +18,10 @@ const auditLogSchema = new Schema(
       trim: true,
     },
     url: {
-        type: String,
-        trim: true,
-      },
-      userOwner: {
+      type: String,
+      trim: true,
+    },
+    userOwner: {
       type: String,
       trim: true,
       require: true,
@@ -42,6 +42,6 @@ const auditLogSchema = new Schema(
 //   auditLogDetail: "se murio el server"
 // }
 
-auditLogSchema.plugin(mongoosePaginate); // Asi inyectamos el plugin de mongoose-paginate en nuestro esquema
+auditLogsSchema.plugin(mongoosePaginate); // Asi inyectamos el plugin de mongoose-paginate en nuestro esquema
 
-module.exports = model("auditLog", auditLogSchema);
+module.exports = model("auditLogs", auditLogsSchema);

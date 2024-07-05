@@ -32,6 +32,7 @@
     "passport-jwt": "^4.0.1",
     "passport-local": "^1.0.0",
     "stack-trace": "^1.0.0-pre2",
+    "winston": "^3.13.0",
     "winston-mongodb": "^5.1.1"
   }
 }

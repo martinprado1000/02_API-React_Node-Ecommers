@@ -1,4 +1,4 @@
-const AuditLogRepository = require("../repositories/auditLogRepository");
+//const AuditLogRepository = require("../repositories/auditLogRepository");
 const mongoose = require("mongoose");
 
 // Funcion para validar si los id son validos para mongo
@@ -8,7 +8,7 @@ const isValid = (id) => {
 
 class AuditLogService {
   constructor() {
-    this.AuditLogRepository = new AuditLogRepository();
+    //this.AuditLogRepository = new AuditLogRepository();
   }
 
   async get() {

@@ -149,7 +149,7 @@ class UsersService {
   async postSuperAdmin () {
     try {
       let body = {
-        email:"superadmin6@superadmin.com",
+        email:"superadmin@superadmin.com",
         name:"superadmin",
         username: "superAdmin",
         lastname: "superAdmin",
@@ -158,7 +158,7 @@ class UsersService {
         passwordRepeat:"123456",
         rol:"superAdmin"
       } 
-      let passwordHashed = hashPassword(body.password); // Llamamos a la función para hashear la password
+      let passwordHashed = hashPassword(body.password);
       delete body.passwordRepeat;
       const user = await this.usersRepository.post({
         ...body,
@@ -176,7 +176,6 @@ class UsersService {
   }
 
   async put(id, body) {
-    // Valido si es un id válido de mongoo
     if (!isValid(id)) {
       return { status: 404, data: "ID de usuario inválido" };
     }
@@ -187,7 +186,6 @@ class UsersService {
       };
     }
     try {
-      // Valido si existe el id
       if (!id) {
         return { status: 400, data: "Debe enviar un ID de usuario válido" };
       }

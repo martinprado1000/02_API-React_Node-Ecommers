@@ -1,7 +1,7 @@
 const { Schema, model } = require("mongoose");
 const mongoosePaginate = require("mongoose-paginate-v2");
 
-const errorLogSchema = new Schema(
+const errorLogsSchema = new Schema(
   {
     typeError: {
       type: String,
@@ -34,6 +34,6 @@ const errorLogSchema = new Schema(
   { timestamps: true }
 );
 
-errorLogSchema.plugin(mongoosePaginate); // Asi inyectamos el plugin de mongoose-paginate en nuestro esquema
+errorLogsSchema.plugin(mongoosePaginate); // Asi inyectamos el plugin de mongoose-paginate en nuestro esquema
 
-module.exports = model("errorLog", errorLogSchema);
+module.exports = model("errorLogs", errorLogsSchema);

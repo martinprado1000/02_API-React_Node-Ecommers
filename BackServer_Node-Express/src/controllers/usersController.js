@@ -23,10 +23,13 @@ class ServicesController {
   }
 
   async post(req, res) {
+    const body = req.body;
     const result = await this.usersService.post(body);
+    console.log(result)
     res.json(result);
   }
 
+  // Crea el usuario superAdmin que esta hardcodeado en el service
   async postSuperAdmin(req, res) {
     const result = await this.usersService.postSuperAdmin();
     res.json(result);
